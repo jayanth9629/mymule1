@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="45ea8a32-20b3-430d-b48c-12b2c96a1965" >
+
+		<http:listener-connection host="0.0.0.0" port="8081" />
+
+	</http:listener-config>
+
+	<flow name="choice-taskFlow" doc:id="551f7abc-84eb-4eb5-9940-a216dde5af0e" >
+
+		<http:listener doc:name="Listener" doc:id="1a0c97dc-5527-4a84-b2a9-c2473adf2b75" config-ref="HTTP_Listener_config" path="/choice"/>
+
+		<logger level="INFO" doc:name="Logger" doc:id="746d8023-ee83-4af5-8940-bebc93830e22" />
+
+		<set-variable value="#[attributes.queryParams.country]" doc:name="Set Variable" doc:id="39997a49-4eba-4d16-a19e-7eabd6db6ed0" variableName="abc"/>
+
+		<choice doc:name="Choice" doc:id="8c5d615c-13a6-4c9d-bb68-27172ece5624" >
+
+			<when expression='#[vars.abc == "india"]'>
+
+				<logger level="INFO" doc:name="Logger" doc:id="db6512b1-d4e9-4dc3-9211-0044348288cb" />
+
+				<logger level="INFO" doc:name="Logger" doc:id="9cbba888-f5bd-4e7d-b732-8b5d198d1887" />
+
+			</when>
+
+			<when expression='#[vars.abc == "ger"]'>
+
+				<logger level="INFO" doc:name="Logger" doc:id="fe957094-6d33-4bc1-a53e-e0af79ee3264" />
+
+			</when>
+
+			<when expression='#[vars.abc == "us"]'>
+
+				<logger level="INFO" doc:name="Logger" doc:id="cbad539d-ead7-4811-8eee-a606fe1ef158" />
+
+			</when>
+
+			<otherwise >
+
+				<logger level="INFO" doc:name="Logger" doc:id="64ea9fd3-298a-404b-b7ca-22b4aaa181fa" message='"UK-condition not ex"'/>
+
+			</otherwise>
+
+		</choice>
+
+		<logger level="INFO" doc:name="Logger" doc:id="07b652fc-3866-4ed4-a1f4-c08e87bbb146" message='"finall"'/>
+
+	</flow>
+
+</mule>
